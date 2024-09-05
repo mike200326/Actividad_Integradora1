@@ -44,3 +44,22 @@ def longest_common_substring(trans1, trans2):
                 if dp[i][j] > length:
                     length = dp[i][j]
                     end_index = i
+
+def main():
+    # Read the content from the files
+    transmission1 = read_file('transmission1.txt')
+    mcode1 = read_file('mcode1.txt')
+    
+
+    # Check if each malicious code is in the transmissions
+    print(contains_code(transmission1, mcode1))
+    
+    # Find the longest palindromic substring in each transmission
+    print(find_longest_palindrome(transmission1))
+    
+
+    # Find the longest common substring between the two transmissions
+    print(longest_common_substring(transmission1))
+
+if __name__ == "__main__":
+    main()
