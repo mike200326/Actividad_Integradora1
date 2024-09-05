@@ -9,17 +9,28 @@ def contains_code(transmission, code):
     else:
         return "false"
 
-def find_longest_palindrome(transmission):
-    n = len(transmission)
-    start, max_length = 0, 1
+def find_longest_palindrome(s):
+    t = '#'.join('^{}$'.format(s))
+    n = len(t)
+    p = [0] * n
+    center = right = 0
 
-    for i in range(n):
-        for j in range(i, n):
-            substr = transmission[i:j+1]
-            if substr == substr[::-1] and len(substr) > max_length:
-                start = i
-                max_length = len(substr)
-    return f"{start + 1} {start + max_length}"
+    for i in range(1, n - 1):
+        if i < right:
+            p[i] = min(right - i, p[2 * center - i])
+        while t[i + p[i] + 1] == t[i - p[i] - 1]:
+            p[i] += 1
+
+        if i + p[i] > right:
+            center, right = i, i + p[i]
+
+    max_len = max(p)
+    center_index = p.index(max_len)
+    
+    start = (center_index - max_len) // 2
+    end = start + max_len
+
+    return f"{start + 1} {end}"
 
 def longest_common_substring(trans1, trans2):
     n, m = len(trans1), len(trans2)
